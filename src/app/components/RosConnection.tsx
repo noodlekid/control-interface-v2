@@ -29,7 +29,7 @@ const RosConnection = ( { children }: {children: React.ReactNode} ) => {
     const connect = (url: string, callback: VoidFunction) => {
         
         if(ros) {
-            ros.close();2
+            ros.close();
             console.log('Existing connection terminated');
         }
 
