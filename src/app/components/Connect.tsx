@@ -1,40 +1,41 @@
-'use client'
+"use client";
 
-import { SyntheticEvent, useContext } from "react"
-import { RosConnectionContext } from "./RosConnection"
-import { useState, useEffect } from 'react';
+import { SyntheticEvent, useContext } from "react";
+import { RosConnectionContext } from "./RosConnection";
+import { useState, useEffect } from "react";
 import ConnectButton from "./ConnectButton";
-import { TextField, Grid, Paper, Box } from '@mui/material'
+import { TextField, Grid, Paper, Box } from "@mui/material";
 
 function Connect() {
-    const ros = useContext(RosConnectionContext);;
+  const ros = useContext(RosConnectionContext);
 
-    const [address, setAddress] = useState<string>('')
-    useEffect(() => { 
-      const defaultAddress = 'ws://' + window.location.host.split(':')[0] + ':9090';
-      setAddress(defaultAddress);
-    }, []);
+  const [address, setAddress] = useState<string>("");
+  useEffect(() => {
+    const defaultAddress =
+      "ws://" + window.location.host.split(":")[0] + ":9090";
+    setAddress(defaultAddress);
+  }, []);
 
-    const handleSubmit = (e: SyntheticEvent) => {
-        e.preventDefault();
-        if(address) {
-            ros.connect(address, () => {
-              console.log('Connected')
-            });
-        }
-    };
-
-    const handleChange = (e: SyntheticEvent) => {
-        const target = e.target as HTMLInputElement;
-        setAddress(target.value);
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (address) {
+      ros.connect(address, () => {
+        console.log("Connected");
+      });
     }
+  };
 
-    return (
-        <Grid
+  const handleChange = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setAddress(target.value);
+  };
+
+  return (
+    <Grid
       container
       justifyContent="center"
       alignItems="center"
-      style={{ minHeight: '100vh' }}
+      style={{ minHeight: "100vh" }}
     >
       <Grid item lg={4} md={6} sm={8}>
         <Paper>
@@ -58,7 +59,9 @@ function Connect() {
                   />
                 </Grid>
                 <Grid item xs={3}>
-                  <ConnectButton connecting={ros.connectionStatus.isConnecting} />
+                  <ConnectButton
+                    connecting={ros.connectionStatus.isConnecting}
+                  />
                 </Grid>
               </Grid>
             </form>
@@ -66,7 +69,7 @@ function Connect() {
         </Paper>
       </Grid>
     </Grid>
-    )
+  );
 }
 
 export default Connect;

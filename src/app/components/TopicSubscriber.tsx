@@ -1,35 +1,37 @@
-import { useContext, useEffect, useState } from "react";
+"use client";
+
+import { useContext, useState, useEffect } from "react";
+import { RosConnectionContext } from "./RosConnection";
 import ROSLIB from "roslib";
 
-interface TopicSubscriberProp {
-    topic: ROSLIB.Topic;
-    callback: (message: ROSLIB.Message) => void; // Update the type of the callback parameter to 'Message'.
+interface StdMsgString {
+    message: ROSLIB.Message;
+    data: string;
 }
 
-function TopicSubscriber({topic, callback} : TopicSubscriberProp) {
-    const [isSubscribed, setSubcribed] = useState<boolean>(false)
+const Subscriber = () => {
+  const ros = useContext(RosConnectionContext);
+  const [msg, setMsg] = useState<ROSLIB.Message>("");
 
-    useEffect(() => {
+  useEffect(() => {
+    if (!ros.ros) return;
 
-        if(!isSubscribed){
-            topic.subscribe((message) => {
-                setSubcribed(true);
-                console.log('Successfully subscribed to: ', topic.name);
-                callback(message);
-            });
-        } 
+    const topic = new ROSLIB.Topic({
+      ros: ros.ros,
+      name: "/chatter",
+      messageType: "std_msgs/String",
+    });
 
-        if(isSubscribed) {
-            console.log('Already subscirbed!');
-        }
-        
-        return () => {
-            topic.unsubscribe()
-            setSubcribed(false);
-        }
-    }, [topic, callback, isSubscribed])
+    topic.subscribe((message) => {
+      setMsg((message as StdMsgString).data);
+    });
 
-    return <></>
-}
+    return () => {
+      topic.unsubscribe();
+    };
+  }, [ros.ros]);
 
-export default TopicSubscriber;
+  return <h1>{JSON.stringify(msg)}</h1>;
+};
+
+export default Subscriber;
