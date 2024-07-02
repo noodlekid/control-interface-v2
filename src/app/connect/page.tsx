@@ -1,14 +1,12 @@
-import RosConnection from "../components/RosConnection";
+import RosConnection from "../components/ROSConnection";
 import Connect from "../components/Connect"
 import { ToastContainer } from "react-toastify";
-import GNSSFix from "../components/GNSSFix";
 
 export default function ConnectPage() {
   return (
     <RosConnection>
       <ToastContainer/>
       <Connect/>
-      <GNSSFix/>
     </RosConnection>
   )
 }
