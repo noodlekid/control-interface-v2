@@ -5,6 +5,7 @@ import { Button, CircularProgress } from "@mui/material";
 
 interface ConnectButtonProps {
   connecting: boolean;
+  connected: boolean;
 }
 
 function ConnectButton(props: ConnectButtonProps): React.ReactElement {
@@ -12,6 +13,12 @@ function ConnectButton(props: ConnectButtonProps): React.ReactElement {
     return (
       <Button fullWidth disabled variant="contained">
         <CircularProgress color="inherit" size={25} />
+      </Button>
+    );
+  } else if (props.connected) {
+    return (
+      <Button fullWidth disabled variant="contained">
+        Connected
       </Button>
     );
   }

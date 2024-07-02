@@ -30,6 +30,12 @@ function Connect() {
     setAddress(target.value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter'){
+      e.preventDefault();
+    }
+  }
+
   return (
     <Grid
       container
@@ -40,7 +46,7 @@ function Connect() {
       <Grid item lg={4} md={6} sm={8}>
         <Paper>
           <Box p={1}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
               <Grid
                 container
                 direction="row"
@@ -61,6 +67,7 @@ function Connect() {
                 <Grid item xs={3}>
                   <ConnectButton
                     connecting={ros.connection.isConnecting}
+                    connected={ros.connection.isConnected}
                   />
                 </Grid>
               </Grid>
