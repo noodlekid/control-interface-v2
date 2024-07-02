@@ -1,13 +1,13 @@
 "use client";
 
 import { SyntheticEvent, useContext } from "react";
-import { RosConnectionContext } from "./RosConnection";
+import ROSContext from "../contexts/ROSContext";
 import { useState, useEffect } from "react";
 import ConnectButton from "./ConnectButton";
 import { TextField, Grid, Paper, Box } from "@mui/material";
 
 function Connect() {
-  const ros = useContext(RosConnectionContext);
+  const ros = useContext(ROSContext);
 
   const [address, setAddress] = useState<string>("");
   useEffect(() => {
@@ -60,7 +60,7 @@ function Connect() {
                 </Grid>
                 <Grid item xs={3}>
                   <ConnectButton
-                    connecting={ros.connectionStatus.isConnecting}
+                    connecting={ros.connection.isConnecting}
                   />
                 </Grid>
               </Grid>

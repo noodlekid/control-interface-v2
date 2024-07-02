@@ -1,5 +1,5 @@
 import { Message, Topic } from "roslib";
-import RosConnection from "../components/RosConnection";
+import RosConnection from "../components/ROSConnection";
 
 
 function DashHome() {
