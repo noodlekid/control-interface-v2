@@ -2,93 +2,151 @@
 
 import ROSContext, { ConnectionStatus } from "../contexts/ROSContext";
 import ROSLIB from "roslib";
-import { useState, useEffect } from "react";
-import { toast } from 'react-toastify';
-import 'react-toastify/ReactToastify.css';
+import { useState, useEffect, useContext } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 
-const ROSConnect = ({ children }: { children: React.ReactNode }) => {
-  const [connection, setConnection] = useState<ConnectionStatus>({
-    url: "",
-    isConnecting: false,
-    isConnected: false,
-  });
+const defaultConnection: ConnectionStatus = {
+  url: "ws://localhost:9090",
+  isConnected: false,
+  isConnecting: false,
+};
 
+export const useROS = () => {
+  const context = useContext(ROSContext);
+  if (context === null) {
+    throw new Error("useROS must be used within a ROSProvider");
+  }
+  return context;
+};
+
+export default function ROSConnect({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [connection, setConnection] =
+    useState<ConnectionStatus>(defaultConnection);
   const [ros] = useState<ROSLIB.Ros>(new ROSLIB.Ros({}));
 
   useEffect(() => {
 
-    ros.on("connection", () => {
-      // Call back on connection
+    const handleConnection = () => {
+      console.log("CONNECTION SUCCESSFUL");
       setConnection({
         ...connection,
-        isConnecting: false,
         isConnected: true,
+        isConnecting: false,
       });
-      toast.success('Successful Connection', {
+      toast.success("CONNECT SUCCESSFUL", {
         position: "top-right",
         autoClose: 5000,
         draggable: false,
+        closeOnClick: true,
         pauseOnHover: true,
-        pauseOnFocusLoss: false
+        pauseOnFocusLoss: false,
       });
-    });
+    };
 
-    ros.on("error", (error) => {
-      // Call back on error
-      console.error("Error connecting", error);
-      toast.error('Failed Connection Attempt', { 
+    const handleError = (error: Error) => {
+      console.error(error);
+      localStorage.removeItem("rosServerAddress");
+      setConnection({
+        ...connection,
+        isConnected: false,
+        isConnecting: false,
+      });
+      toast.error("Connection Failed.", {
         position: "top-right",
         autoClose: 5000,
-        draggable: false,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
         pauseOnHover: true,
-        pauseOnFocusLoss: false
-      })
-    });
+        draggable: false,
+      });
+    };
 
-    ros.on("close", (e: CloseEvent) => {
+    const handleClose = (e: { wasClean: boolean }) => {
       if (e.wasClean) {
         console.log("Disconnected");
         setConnection({
           ...connection,
-          isConnecting: false,
           isConnected: false,
+          isConnecting: false,
+        });
+        toast.info("Disconnected.", {
+          position: "top-right",
+          autoClose: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: true,
+          draggable: false,
         });
       } else {
         setConnection({
-            ...connection,
-            isConnecting: false,
-            isConnected: false,
-        })
-        console.log('Connenction failed');
+          ...connection,
+          isConnected: false,
+          isConnecting: false,
+        });
+        toast.error('Connection Failed.', {
+          position: 'top-right',
+          autoClose: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: true,
+          draggable: false,
+        });
       }
-    });
+    };
+
+    ros.on('connection', handleConnection)
+
+    ros.on('error', handleError)
+
+    ros.on('close', handleClose)
+
+    return () => {
+      ros.off('connection', handleConnection);
+      ros.off('error', handleError);
+      ros.off('close', handleClose);
+    }
   }, []);
 
   const connect = (url: string, callback: VoidFunction) => {
+    console.log('Attempting conneciton to ' + url);
     setConnection({
       ...connection,
-      url: url,
-      isConnecting: true,
-    });
-
-    const onConnection = () => {
-      callback();
-      ros.off("connection", onConnection)
-    }
-
+      isConnected: false,
+      isConnecting: true
+    })
     try {
       ros.connect(url);
-      ros.on("connection", onConnection);
-    } catch (e) {
-      console.error("Failed to create ROS instance", e);
-      ros.off("connection", onConnection);
+      // ros.on('connection', callback);
+    } catch (e) { 
+      console.log('Failed to create ROS instance', e);
+      setConnection({
+        ...connection,
+        isConnected: false,
+        isConnecting: false
+      })
+      toast.error('Connection Failed.', {
+        position: 'top-right',
+        autoClose: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
+        pauseOnHover: true,
+        draggable: false,
+      });
     }
-  };
+
+    return () => {
+      ros.off('connection', callback)
+    }
+  }
 
   const disconnect = () => {
     ros.close();
-    localStorage.removeItem("ROSServerAddress");
-  };
+  }
 
   return (
     <ROSContext.Provider
@@ -102,6 +160,4 @@ const ROSConnect = ({ children }: { children: React.ReactNode }) => {
       {children}
     </ROSContext.Provider>
   );
-};
-
-export default ROSConnect;
+}
