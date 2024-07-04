@@ -2,7 +2,7 @@
 
 import ROSContext, { ConnectionStatus } from "../contexts/ROSContext";
 import ROSLIB from "roslib";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, ReactNode, useContext } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 
@@ -12,25 +12,12 @@ const defaultConnection: ConnectionStatus = {
   isConnecting: false,
 };
 
-export const useROS = () => {
-  const context = useContext(ROSContext);
-  if (context === null) {
-    throw new Error("useROS must be used within a ROSProvider");
-  }
-  return context;
-};
-
-export default function ROSConnect({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ROSConnect({ children }: { children: ReactNode }) {
   const [connection, setConnection] =
     useState<ConnectionStatus>(defaultConnection);
   const [ros] = useState<ROSLIB.Ros>(new ROSLIB.Ros({}));
 
   useEffect(() => {
-
     const handleConnection = () => {
       console.log("CONNECTION SUCCESSFUL");
       setConnection({
@@ -88,8 +75,8 @@ export default function ROSConnect({
           isConnected: false,
           isConnecting: false,
         });
-        toast.error('Connection Failed.', {
-          position: 'top-right',
+        toast.error("Lost Connection.", {
+          position: "top-right",
           autoClose: 5000,
           closeOnClick: true,
           pauseOnFocusLoss: false,
@@ -99,38 +86,39 @@ export default function ROSConnect({
       }
     };
 
-    ros.on('connection', handleConnection)
+    ros.on("connection", handleConnection);
 
-    ros.on('error', handleError)
+    ros.on("error", handleError);
 
-    ros.on('close', handleClose)
+    ros.on("close", handleClose);
 
     return () => {
-      ros.off('connection', handleConnection);
-      ros.off('error', handleError);
+      ros.off("connection", handleConnection);
       ros.off('close', handleClose);
-    }
+      ros.off('error', handleError);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const connect = (url: string, callback: VoidFunction) => {
-    console.log('Attempting conneciton to ' + url);
+    console.log("Attempting conneciton to " + url);
     setConnection({
       ...connection,
       isConnected: false,
-      isConnecting: true
-    })
+      isConnecting: true,
+    });
     try {
       ros.connect(url);
-      // ros.on('connection', callback);
-    } catch (e) { 
-      console.log('Failed to create ROS instance', e);
+      callback();
+    } catch (e) {
+      console.log("Failed to create ROS instance", e);
       setConnection({
         ...connection,
         isConnected: false,
-        isConnecting: false
-      })
-      toast.error('Connection Failed.', {
-        position: 'top-right',
+        isConnecting: false,
+      });
+      toast.error("Connection Failed.", {
+        position: "top-right",
         autoClose: 5000,
         closeOnClick: true,
         pauseOnFocusLoss: false,
@@ -140,13 +128,13 @@ export default function ROSConnect({
     }
 
     return () => {
-      ros.off('connection', callback)
-    }
-  }
+      ros.off("connection", callback);
+    };
+  };
 
   const disconnect = () => {
     ros.close();
-  }
+  };
 
   return (
     <ROSContext.Provider

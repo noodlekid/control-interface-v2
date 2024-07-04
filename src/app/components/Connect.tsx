@@ -6,21 +6,24 @@ import { useState, useEffect } from "react";
 import ConnectButton from "./ConnectButton";
 import { TextField, Grid, Paper, Box } from "@mui/material";
 
+import { useRouter } from "next/navigation";
+
 function Connect() {
+  const router = useRouter();
   const ros = useContext(ROSContext);
 
   const [address, setAddress] = useState<string>("");
   useEffect(() => {
-    const defaultAddress =
-      "ws://" + window.location.host.split(":")[0] + ":9090";
+    const defaultAddress = "ws://" + window.location.host.split(":")[0] + ":9090";
     setAddress(defaultAddress);
-  }, []);
+  }, [address])
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (address) {
+      localStorage.setItem("rosServerAddress", address);
       ros.connect(address, () => {
-        console.log("Connected");
+        router.replace('/dashboard');
       });
     }
   };
@@ -31,10 +34,10 @@ function Connect() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter'){
+    if (e.key === "Enter") {
       e.preventDefault();
     }
-  }
+  };
 
   return (
     <Grid

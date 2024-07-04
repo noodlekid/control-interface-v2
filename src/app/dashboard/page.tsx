@@ -1,8 +1,16 @@
-import { Message, Topic } from "roslib";
+'use client'
+
 import RosConnection from "../components/ROSConnection";
+import Subscribe from "../components/TestSubscriber";
+import ROSContext from "../contexts/ROSContext";
 
 
-function DashHome() {
+function Dashboard() {
+    return (
+    <RosConnection>
+        <Subscribe/>
+    </RosConnection>
+    )
 }
 
-export default DashHome;
+export default Dashboard;
