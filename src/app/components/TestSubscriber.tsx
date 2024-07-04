@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import ROSLIB from "roslib";
-import ROSContext from "../contexts/ROSContext";
+import useROSStore from "../contexts/ROSContext";
 import { String } from "../types/stdMsgTypes";
 
 function Subscribe(): JSX.Element {
-  const ros = ROSContext.useROSStore();
+  const ros = useROSStore();
   const [msg, setMsg] = useState<string>("");
 
   const listener = new ROSLIB.Topic({
