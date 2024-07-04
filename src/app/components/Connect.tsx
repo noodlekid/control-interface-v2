@@ -1,7 +1,7 @@
 "use client";
 
 import { SyntheticEvent } from "react";
-import ROSContext from "../contexts/ROSContext"; // Import the useROSInstanceState function
+import useROSStore from "../contexts/ROSContext"; // Import the useROSInstanceState function
 import { useState, useEffect } from "react";
 import ConnectButton from "./ConnectButton";
 import { TextField, Grid, Paper, Box } from "@mui/material";
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 function Connect() {
   const router = useRouter();
-  const ros = ROSContext.useROSStore();
+  const ros = useROSStore();
 
   const [address, setAddress] = useState<string>("");
   useEffect(() => {

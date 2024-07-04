@@ -1,18 +1,17 @@
 "use client";
 
-import ROSContext from "../contexts/ROSContext";
+import useROSStore from "../contexts/ROSContext";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 
 export default function RosConnect() : JSX.Element {
-  const { connection, setConnection } = ROSContext.useConnectionState();
-  const {ros, setConnect, setDisconnect} = ROSContext.useROSStore();
+  const {ros, setConnect, setDisconnect, setConnectionStatus, connection} = useROSStore();
 
   useEffect(() => {
     const handleConnection = () => {
       console.log("CONNECTION SUCCESSFUL");
-      setConnection({
+      setConnectionStatus({
         ...connection,
         isConnected: true,
         isConnecting: false,
@@ -30,7 +29,7 @@ export default function RosConnect() : JSX.Element {
     const handleError = (error: Error) => {
       console.error(error);
       localStorage.removeItem("rosServerAddress");
-      setConnection({
+      setConnectionStatus({
         ...connection,
         isConnected: false,
         isConnecting: false,
@@ -48,7 +47,7 @@ export default function RosConnect() : JSX.Element {
     const handleClose = (e: { wasClean: boolean }) => {
       if (e.wasClean) {
         console.log("Disconnected");
-        setConnection({
+        setConnectionStatus({
           ...connection,
           isConnected: false,
           isConnecting: false,
@@ -62,7 +61,7 @@ export default function RosConnect() : JSX.Element {
           draggable: false,
         });
       } else {
-        setConnection({
+        setConnectionStatus({
           ...connection,
           isConnected: false,
           isConnecting: false,
@@ -97,7 +96,7 @@ export default function RosConnect() : JSX.Element {
 
   const connect = (url: string, callback: VoidFunction) => {
     console.log("Attempting conneciton to " + url);
-    setConnection({
+    setConnectionStatus({
       ...connection,
       isConnected: false,
       isConnecting: true,
@@ -107,7 +106,7 @@ export default function RosConnect() : JSX.Element {
       callback();
     } catch (e) {
       console.log("Failed to create ROS instance", e);
-      setConnection({
+      setConnectionStatus({
         ...connection,
         isConnected: false,
         isConnecting: false,
