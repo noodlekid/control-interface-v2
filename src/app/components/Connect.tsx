@@ -24,6 +24,7 @@ function Connect() {
     if (address) {
       ros.connect(address, () => {
         // TO-DO: Page Navigation (use router.push())
+        router.push('/dashboard')
       });
     }
   };
