@@ -7,7 +7,7 @@ import RosConnect from "../components/ROSConnection";
 export default function ConnectPage() {
   return (
     <>
-        <RosConnect></RosConnect>
+        <RosConnect/>
         <ToastContainer />
         <Connect />
     </>
