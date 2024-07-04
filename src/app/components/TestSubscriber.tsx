@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ROSLIB from "roslib";
-import useROSStore from "../contexts/ROSContext";
+import useROSStore from "../stores/ROSStore";
 import { String } from "../types/stdMsgTypes";
 
 function Subscribe(): JSX.Element {
