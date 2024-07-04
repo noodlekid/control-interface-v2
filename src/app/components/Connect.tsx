@@ -1,13 +1,12 @@
 "use client";
 
-import { SyntheticEvent, useContext } from "react";
+import { SyntheticEvent } from "react";
 import ROSContext from "../contexts/ROSContext"; // Import the useROSInstanceState function
 import { useState, useEffect } from "react";
 import ConnectButton from "./ConnectButton";
 import { TextField, Grid, Paper, Box } from "@mui/material";
 
 import { useRouter } from "next/navigation";
-import RosConnect from "./ROSConnection";
 
 function Connect() {
   const router = useRouter();
@@ -23,7 +22,6 @@ function Connect() {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (address) {
-      localStorage.setItem("rosServerAddress", address);
       ros.connect(address, () => {
         // TO-DO: Page Navigation (use router.push())
       });
@@ -42,45 +40,45 @@ function Connect() {
   };
 
   return (
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        style={{ minHeight: "100vh" }}
-      >
-        <Grid item lg={4} md={6} sm={8}>
-          <Paper>
-            <Box p={1}>
-              <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-                <Grid
-                  container
-                  direction="row"
-                  spacing={2}
-                  justifyContent="left"
-                  alignItems="center"
-                >
-                  <Grid item xs={9}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="address"
-                      onChange={handleChange}
-                      value={address}
-                      label="Rover IP"
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <ConnectButton
-                      connecting={ros.connection.isConnecting}
-                      connected={ros.connection.isConnected}
-                    />
-                  </Grid>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Grid item lg={4} md={6} sm={8}>
+        <Paper>
+          <Box p={1}>
+            <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+              <Grid
+                container
+                direction="row"
+                spacing={2}
+                justifyContent="left"
+                alignItems="center"
+              >
+                <Grid item xs={9}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="address"
+                    onChange={handleChange}
+                    value={address}
+                    label="Rover IP"
+                  />
                 </Grid>
-              </form>
-            </Box>
-          </Paper>
-        </Grid>
+                <Grid item xs={3}>
+                  <ConnectButton
+                    connecting={ros.connection.isConnecting}
+                    connected={ros.connection.isConnected}
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Paper>
       </Grid>
+    </Grid>
   );
 }
 
