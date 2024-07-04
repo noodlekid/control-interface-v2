@@ -1,15 +1,15 @@
 'ues client'
 
-import RosConnection from "../components/ROSConnection";
 import Connect from "../components/Connect";
 import { ToastContainer } from "react-toastify";
-import Subscribe from "../components/TestSubscriber";
+import RosConnect from "../components/ROSConnection";
 
 export default function ConnectPage() {
   return (
-    <RosConnection>
+    <>
+        <RosConnect></RosConnect>
         <ToastContainer />
         <Connect />
-    </RosConnection>
+    </>
   );
 }

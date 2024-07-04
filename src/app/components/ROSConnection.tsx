@@ -1,21 +1,13 @@
 "use client";
 
-import ROSContext, { ConnectionStatus } from "../contexts/ROSContext";
-import ROSLIB from "roslib";
-import { useState, useEffect, ReactNode, useContext } from "react";
+import ROSContext from "../contexts/ROSContext";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 
-const defaultConnection: ConnectionStatus = {
-  url: "ws://localhost:9090",
-  isConnected: false,
-  isConnecting: false,
-};
-
-export default function ROSConnect({ children }: { children: ReactNode }) {
-  const [connection, setConnection] =
-    useState<ConnectionStatus>(defaultConnection);
-  const [ros] = useState<ROSLIB.Ros>(new ROSLIB.Ros({}));
+export default function RosConnect() : JSX.Element {
+  const { connection, setConnection } = ROSContext.useConnectionState();
+  const {ros, setConnect, setDisconnect} = ROSContext.useROSStore();
 
   useEffect(() => {
     const handleConnection = () => {
@@ -86,6 +78,9 @@ export default function ROSConnect({ children }: { children: ReactNode }) {
       }
     };
 
+    setConnect(connect);
+    setDisconnect(disconnect);
+    
     ros.on("connection", handleConnection);
 
     ros.on("error", handleError);
@@ -94,8 +89,8 @@ export default function ROSConnect({ children }: { children: ReactNode }) {
 
     return () => {
       ros.off("connection", handleConnection);
-      ros.off('close', handleClose);
-      ros.off('error', handleError);
+      ros.off("close", handleClose);
+      ros.off("error", handleError);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -136,16 +131,7 @@ export default function ROSConnect({ children }: { children: ReactNode }) {
     ros.close();
   };
 
-  return (
-    <ROSContext.Provider
-      value={{
-        connect: connect,
-        disconnect: disconnect,
-        ros: ros,
-        connection: connection,
-      }}
-    >
-      {children}
-    </ROSContext.Provider>
-  );
+
+
+  return <></>;
 }
