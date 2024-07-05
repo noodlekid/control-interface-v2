@@ -17,16 +17,17 @@ function Connect() {
     const defaultAddress =
       "ws://" + window.location.host.split(":")[0] + ":9090";
     setAddress(defaultAddress);
-  }, [address]);
+    if (ros.connection.isConnected) {
+      router.push('/dashboard')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ros.connection.isConnected]);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (address) {
       ros.connect(address, () => {
-        // TO-DO: Page Navigation (use router.push())
-        router.push('/dashboard')
+        // Remove Callback?
       });
-    }
   };
 
   const handleChange = (e: SyntheticEvent) => {

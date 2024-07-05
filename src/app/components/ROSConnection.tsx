@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 
-export default function RosConnect() : JSX.Element {
-  const {ros, setConnect, setDisconnect, setConnectionStatus, connection} = useROSStore();
+export default function RosConnect(): JSX.Element {
+  const { ros, setConnect, setDisconnect, setConnectionStatus, connection } =
+    useROSStore();
 
   useEffect(() => {
     const handleConnection = () => {
@@ -28,7 +29,6 @@ export default function RosConnect() : JSX.Element {
 
     const handleError = (error: Error) => {
       console.error(error);
-      localStorage.removeItem("rosServerAddress");
       setConnectionStatus({
         ...connection,
         isConnected: false,
@@ -77,14 +77,15 @@ export default function RosConnect() : JSX.Element {
       }
     };
 
-    setConnect(connect);
-    setDisconnect(disconnect);
-    
+
     ros.on("connection", handleConnection);
 
     ros.on("error", handleError);
 
     ros.on("close", handleClose);
+
+    setConnect(connect);
+    setDisconnect(disconnect);
 
     return () => {
       ros.off("connection", handleConnection);
@@ -101,9 +102,10 @@ export default function RosConnect() : JSX.Element {
       isConnected: false,
       isConnecting: true,
     });
+
     try {
-      ros.connect(url);
-      callback();
+      ros.connect(url)
+      //callback();
     } catch (e) {
       console.log("Failed to create ROS instance", e);
       setConnectionStatus({
@@ -129,8 +131,6 @@ export default function RosConnect() : JSX.Element {
   const disconnect = () => {
     ros.close();
   };
-
-
 
   return <></>;
 }
