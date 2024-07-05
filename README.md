@@ -1,5 +1,9 @@
 # CONTROL INTERFACE FOR CPRT MARS ROVER (NAME PENDING)
 
+1. clone repo
+2. install dependencies (npm install)
+3. run one of the scripts to your liking
+
 To start the server for development run the following npm script:
 
 ```bash
