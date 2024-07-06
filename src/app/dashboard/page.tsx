@@ -1,13 +1,13 @@
 "use client";
 
 import Subscribe from "../components/TestSubscriber";
-import Mapping from "../components/Map"
+import MapViewer from "../components/Map"
 
 
 function Dashboard() {
   return (
     <>
-      <Mapping />
+      <MapViewer />
     </>
   );
 }
