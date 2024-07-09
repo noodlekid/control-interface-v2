@@ -1,35 +1,26 @@
-import React, { useRef, useEffect, useState } from 'react';
-import path from 'path';
-import maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
-import './map.css';
-import data from './positron.json';
+"use client";
 
+import { useState } from "react";
+import Map from "react-map-gl/maplibre";
+import RoverLocation from "./RoverLocation";
 
+// Move to .env.local for production
+const TIlING_SERVER = "http://localhost:8080/styles/basic-preview/style.json";
 
-export default function Map() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng] = useState(-75.7003);
-  const [lat] = useState(45.4247);
-  const [zoom] = useState(14);
-
-  useEffect(() => {
-    if (map.current) return; // stops map from intializing more than once
-
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      /* change this to IP of maptile server */
-      style: 'http://localhost:8080/styles/basic-preview/style.json',
-      center: [lng, lat],
-      zoom: zoom
-    });
-
-  }, [lng, lat, zoom]);
-
+export default function MapView() {
   return (
-    <div className="map-wrap">
-      <div ref={mapContainer} className="map" />
-    </div>
+    <>
+      <Map
+        initialViewState={{
+          longitude:-75.6989402 ,
+          latitude: 45.386601,
+          zoom: 14,
+        }}
+        style={{position: "absolute", width: "100%", height:"100%"}}
+        mapStyle={TIlING_SERVER}
+      >
+        <RoverLocation />
+      </Map>
+    </>
   );
 }

@@ -1,13 +1,12 @@
 "use client";
 
-import Subscribe from "../components/TestSubscriber";
-import MapViewer from "../components/Map"
-
+import MapView from "../components/Map"
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 function Dashboard() {
   return (
     <>
-      <MapViewer />
+      <MapView />
     </>
   );
 }
