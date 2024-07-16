@@ -13,6 +13,8 @@
     "@blueprintjs/icons": "^5.10.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
     "@mapbox/mapbox-gl-supported": "^3.0.0",
     "@mui/material": "^5.15.21",
     "@types/react-map-gl": "^6.1.6",
