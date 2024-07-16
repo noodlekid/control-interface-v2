@@ -77,7 +77,6 @@ export default function RosConnect(): JSX.Element {
       }
     };
 
-
     ros.on("connection", handleConnection);
 
     ros.on("error", handleError);
@@ -104,7 +103,7 @@ export default function RosConnect(): JSX.Element {
     });
 
     try {
-      ros.connect(url)
+      ros.connect(url);
       //callback();
     } catch (e) {
       console.log("Failed to create ROS instance", e);

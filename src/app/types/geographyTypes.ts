@@ -1,5 +1,5 @@
 export interface GeoPoint {
-    latitude: number;
-    longitude: number;
-    altitude: number;
+  latitude: number;
+  longitude: number;
+  altitude: number;
 }
