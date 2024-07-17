@@ -67,6 +67,7 @@ export default function RoverLocation() {
     return () => {
       locationListener.unsubscribe();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

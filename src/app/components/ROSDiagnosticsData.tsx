@@ -30,6 +30,7 @@ export default function ROSDiagnosticViewer() {
         subscribedRef.current = false;
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // The empty dependency array ensures this effect runs only once after the initial render
 
   return (
