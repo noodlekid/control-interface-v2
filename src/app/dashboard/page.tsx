@@ -2,7 +2,7 @@
 
 import { Grid } from "@mui/material";
 import GeoPointPub from "../components/GeoPointPub";
-import MapView from "../components/Map";
+import MapView from "../components/Mapping/Map";
 import "maplibre-gl/dist/maplibre-gl.css";
 import ROSDiagnosticViewer from "../components/ROSDiagnosticsData";
 
