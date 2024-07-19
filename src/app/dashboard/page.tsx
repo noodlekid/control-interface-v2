@@ -1,7 +1,5 @@
 "use client";
 
-import { Grid } from "@mui/material";
-import GeoPointPub from "../components/GeoPointPub";
 import MapView from "../components/Mapping/Map";
 import "maplibre-gl/dist/maplibre-gl.css";
 import ROSDiagnosticViewer from "../components/ROSDiagnosticsData";
@@ -31,7 +29,7 @@ function Dashboard() {
           </div>
           <div className="w-full md:w-1/2 h-1/2">
             <div className="bg-white h-full p-4 flex justify-center items-center">
-              Component 4
+              Component
             </div>
           </div>
         </div>
