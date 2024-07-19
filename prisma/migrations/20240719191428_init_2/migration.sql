@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Poi" ALTER COLUMN "name" DROP NOT NULL;
