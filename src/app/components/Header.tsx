@@ -2,7 +2,6 @@
 
 import React from "react";
 import useROSStore from "../stores/ROSStore";
-import Connect from "./Connect";
 
 function Header() {
   const ros = useROSStore();
