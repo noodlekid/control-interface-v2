@@ -48,3 +48,16 @@ export async function GET() {
     { status: 200 },
   );
 }
+
+// Delete all
+export async function DELETE() {
+  await prisma.poi.deleteMany();
+  await prisma.coordinate.deleteMany();
+  return NextResponse.json(
+    {
+      success: true,
+      message: "All Points of Interest Deleted",
+    },
+    { status: 200 },
+  );
+}
