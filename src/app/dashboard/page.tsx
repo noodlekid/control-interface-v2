@@ -29,7 +29,7 @@ function Dashboard() {
           </div>
           <div className="w-full md:w-1/2 h-1/2">
             <div className="bg-white h-full p-4 flex justify-center items-center">
-              Component
+              component 4 
             </div>
           </div>
         </div>

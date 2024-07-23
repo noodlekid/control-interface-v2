@@ -4,7 +4,7 @@ import Map from "react-map-gl/maplibre";
 import RoverMarker from "./RoverMarker";
 import RoverTrace from "./RoverTrace";
 import RoverLocation from "./RoverLocation";
-
+import ViewPOI from "./PointsOfInterestMarkers";
 const TIlING_SERVER = process.env.NEXT_PUBLIC_MAPTILE_URI;
 
 export default function MapView() {
@@ -19,6 +19,7 @@ export default function MapView() {
         }}
         mapStyle={TIlING_SERVER}
       >
+        <ViewPOI />
         <RoverMarker />
         <RoverTrace />
       </Map>
