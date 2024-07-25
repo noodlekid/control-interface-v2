@@ -1,13 +1,12 @@
 import useLocationStore from "@/app/stores/LocationStore";
 import { Button, TextField } from "@mui/material";
-import { Poi } from "@prisma/client";
 import { SyntheticEvent, useState } from "react";
 import { mutate } from "swr";
 
 export default function AddCurrentLocation() {
   const { location } = useLocationStore();
-  const [name, setName] = useState<string>();
-  const [desc, setDesc] = useState<string>();
+  const [name, setName] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
 
   const handleNameChange = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -26,6 +25,7 @@ export default function AddCurrentLocation() {
     await fetch("/api/poi", {
       method: "POST",
       body: JSON.stringify({
+        // New point of interest with coordinates of rover location
         poi: {
           name: name,
           desc: desc,
@@ -37,7 +37,7 @@ export default function AddCurrentLocation() {
       }),
     });
 
-    await mutate('/api/poi')
+    await mutate("/api/poi");
   };
 
   return (
@@ -59,7 +59,9 @@ export default function AddCurrentLocation() {
           value={desc}
           label="Desc."
         />
-        <Button variant="contained" type="submit" fullWidth>Create POI</Button>
+        <Button variant="contained" type="submit" fullWidth>
+          Create POI
+        </Button>
       </form>
     </div>
   );

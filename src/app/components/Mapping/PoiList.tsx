@@ -1,6 +1,6 @@
 // Displays all the POIs in the database as a list of cards
 "use client";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React from "react";
 import { useFetchAllPoi } from "./FetchPoi";
 import { Poi, Coordinate } from "@prisma/client";
 import {
@@ -9,7 +9,6 @@ import {
   CardHeader,
   Typography,
   Grid,
-  Checkbox,
   IconButton,
 } from "@mui/material";
 
@@ -17,8 +16,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { mutate } from "swr";
 
 export default function PoiList() {
-  const [checked, setChecked] = useState<boolean>(false);
-
   const { data, error } = useFetchAllPoi();
   if (error) {
     return <div>Error loading data</div>;
