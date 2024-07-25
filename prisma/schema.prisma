@@ -16,6 +16,7 @@ datasource db {
 model Poi {
   id           Int        @id @default(autoincrement())
   name         String?    @default("")
+  desc         String?    @default("")
   createdAt    DateTime   @default(now())
   coordinate   Coordinate @relation(fields: [coordinateId], references: [id])
   coordinateId Int
