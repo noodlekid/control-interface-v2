@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   const {
     poi: {
+      desc,
       name,
       coordinate: { longitude, latitude },
     },
@@ -19,6 +20,7 @@ export async function POST(request: NextRequest) {
   const poi = await prisma.poi.create({
     data: {
       name,
+      desc,
       coordinateId: createdCoordinate.id,
     },
   });
@@ -44,19 +46,6 @@ export async function GET() {
         pois,
         coords
       },
-    },
-    { status: 200 },
-  );
-}
-
-// Delete all
-export async function DELETE() {
-  await prisma.poi.deleteMany();
-  await prisma.coordinate.deleteMany();
-  return NextResponse.json(
-    {
-      success: true,
-      message: "All Points of Interest Deleted",
     },
     { status: 200 },
   );
