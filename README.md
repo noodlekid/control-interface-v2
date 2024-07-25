@@ -6,6 +6,7 @@ Start services: (AWAITS FURTHER DOCUMENTATION)
 ```bash
 tileserver-gl
 rosbridge-server
+geodata-db
 ```
 
 You dont need to start those services to work on the UI for the most part, but they are 

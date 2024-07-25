@@ -4,8 +4,12 @@ import Map from "react-map-gl/maplibre";
 import RoverMarker from "./RoverMarker";
 import RoverTrace from "./RoverTrace";
 import RoverLocation from "./RoverLocation";
+
+import "maplibre-gl/dist/maplibre-gl.css";
+
 const TIlING_SERVER = process.env.NEXT_PUBLIC_MAPTILE_URI;
 
+// Displays the mapview for the cooresponding maptile served by tileserver-gl
 export default function MapView() {
   return (
     <>
