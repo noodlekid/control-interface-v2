@@ -4,7 +4,6 @@ import MapView from "../components/Mapping/Map";
 import "maplibre-gl/dist/maplibre-gl.css";
 import ROSDiagnosticViewer from "../components/ROSDiagnosticsData";
 import PoiList from "../components/Mapping/PoiList";
-import NewPoi from "../components/Mapping/MarkPoi";
 import AddCurrentLocation from "../components/Mapping/MarkPoi";
 
 function Dashboard() {

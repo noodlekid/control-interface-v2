@@ -12,7 +12,7 @@ interface coordinatePair {
 }
 
 export default function RoverLocation() {
-  const {  setLocation } = useLocationStore();
+  const { setLocation } = useLocationStore();
   const ros = useROSStore();
 
   const locationListener = new ROSLIB.Topic({
