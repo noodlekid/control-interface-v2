@@ -25,9 +25,7 @@ function Connect() {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    ros.connect(address, () => {
-      // Remove Callback?
-    });
+    ros.connect(address);
   };
 
   const handleChange = (e: SyntheticEvent) => {
