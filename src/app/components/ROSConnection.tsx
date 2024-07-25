@@ -3,9 +3,11 @@
 import useROSStore from "../stores/ROSStore";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { DEFAULT_TOAST_OPTIONS } from "./ToastHelper";
+
 import "react-toastify/ReactToastify.css";
 
-export default function RosConnect(): JSX.Element {
+export default function RosConnect() {
   const { ros, setConnect, setDisconnect, setConnectionStatus, connection } =
     useROSStore();
 
@@ -17,14 +19,7 @@ export default function RosConnect(): JSX.Element {
         isConnected: true,
         isConnecting: false,
       });
-      toast.success("CONNECT SUCCESSFUL", {
-        position: "top-right",
-        autoClose: 5000,
-        draggable: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        pauseOnFocusLoss: false,
-      });
+      toast.success("CONNECT SUCCESSFUL", DEFAULT_TOAST_OPTIONS);
     };
 
     const handleError = (error: Error) => {
@@ -34,14 +29,7 @@ export default function RosConnect(): JSX.Element {
         isConnected: false,
         isConnecting: false,
       });
-      toast.error("Connection Failed.", {
-        position: "top-right",
-        autoClose: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: false,
-        pauseOnHover: true,
-        draggable: false,
-      });
+      toast.error("Connection Failed.", DEFAULT_TOAST_OPTIONS);
     };
 
     const handleClose = (e: { wasClean: boolean }) => {
@@ -52,28 +40,14 @@ export default function RosConnect(): JSX.Element {
           isConnected: false,
           isConnecting: false,
         });
-        toast.info("Disconnected.", {
-          position: "top-right",
-          autoClose: 5000,
-          closeOnClick: true,
-          pauseOnFocusLoss: false,
-          pauseOnHover: true,
-          draggable: false,
-        });
+        toast.info("Disconnected.", DEFAULT_TOAST_OPTIONS);
       } else {
         setConnectionStatus({
           ...connection,
           isConnected: false,
           isConnecting: false,
         });
-        toast.error("Lost Connection.", {
-          position: "top-right",
-          autoClose: 5000,
-          closeOnClick: true,
-          pauseOnFocusLoss: false,
-          pauseOnHover: true,
-          draggable: false,
-        });
+        toast.error("Lost Connection.", DEFAULT_TOAST_OPTIONS);
       }
     };
 
@@ -91,10 +65,9 @@ export default function RosConnect(): JSX.Element {
       ros.off("close", handleClose);
       ros.off("error", handleError);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const connect = (url: string, callback: VoidFunction) => {
+  const connect = (url: string) => {
     console.log("Attempting conneciton to " + url);
     setConnectionStatus({
       ...connection,
@@ -104,7 +77,6 @@ export default function RosConnect(): JSX.Element {
 
     try {
       ros.connect(url);
-      //callback();
     } catch (e) {
       console.log("Failed to create ROS instance", e);
       setConnectionStatus({
@@ -112,18 +84,11 @@ export default function RosConnect(): JSX.Element {
         isConnected: false,
         isConnecting: false,
       });
-      toast.error("Connection Failed.", {
-        position: "top-right",
-        autoClose: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: false,
-        pauseOnHover: true,
-        draggable: false,
-      });
+      toast.error("Connection Failed.", DEFAULT_TOAST_OPTIONS);
     }
 
     return () => {
-      ros.off("connection", callback);
+      ros.off("connection", () => {});
     };
   };
 

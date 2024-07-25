@@ -12,12 +12,12 @@ export interface ConnectionStatus {
 interface ROSInstanceState {
   ros: ROSLIB.Ros;
   connection: ConnectionStatus;
-  connect: (url: string, callback: VoidFunction) => void;
+  connect: (url: string) => void;
   disconnect: () => void;
 
   setRos: (newRos: ROSLIB.Ros) => void;
   setConnect: (
-    newConnect: (url: string, callback: VoidFunction) => void,
+    newConnect: (url: string) => void,
   ) => void;
   setDisconnect: (newDisconnect: () => void) => void;
   setConnectionStatus: (newConnection: ConnectionStatus) => void;
@@ -35,7 +35,7 @@ const useROSStore = create<ROSInstanceState>((set) => ({
   setRos: (newRos: ROSLIB.Ros) => {
     set((state) => ({ ros: newRos }));
   },
-  setConnect: (newConnect: (url: string, callback: VoidFunction) => void) => {
+  setConnect: (newConnect: (url: string) => void) => {
     set((state) => ({ connect: newConnect }));
   },
   setDisconnect: (newDisconnect: () => void) => {
