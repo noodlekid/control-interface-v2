@@ -1,46 +1,58 @@
 "use client";
-
+import React from "react";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+// Import your components
 import MapView from "../components/Mapping/Map";
-import ROSDiagnosticViewer from "../components/ROSDiagnosticsData";
-import PoiList from "../components/Mapping/PoiList";
 import AddCurrentLocation from "../components/Mapping/MarkPoi";
-
-const BORDER_STYLE = "border-2 border-gray-800";
+import PoiList from "../components/Mapping/PoiList";
+import ROSDiagnosticViewer from "../components/ROSDiagnosticsData";
+import Speedometer from "../components/Indicators/Speed";
+import HorizontalAccuracy from "../components/Indicators/HAccEstimate";
 
 function Dashboard() {
   return (
-    <>
-      <div
-        className="h-screen bg-gray-100 p-2"
-        style={{ height: `calc(100vh - 60px)` }}
-      >
-        <div className="flex flex-wrap h-full">
-          <div className={`w-full md:w-1/2 h-1/2 ${BORDER_STYLE}`}>
-            <div className="bg-white h-full flex justify-center items-center">
-              <MapView />
+    <Container
+      maxWidth={false}
+      style={{ height: `calc(100vh - 60px)`, padding: 0 }}
+    >
+      <Grid container style={{ height: "100%" }}>
+        <Grid item xs={12} md={3} className="h-1/2 pl-2 pr-1 py-2">
+          <Paper elevation={3} style={{ height: "100%", overflow: "auto" }}>
+            <MapView />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={3} className="h-1/2 pl-1 pr-2 pt-2 pb-1">
+          <Paper elevation={3} className="h-full">
+            <div className="justify-center p-2 overflow-y-scroll h-full">
+              <div className="p-1 border-2 rounded-md border-slate-800">
+                <AddCurrentLocation />
+              </div>
+              <div className="pt-2">
+                <PoiList />
+              </div>
             </div>
-          </div>
-          <div className={`w-full md:w-1/2 h-1/2 ${BORDER_STYLE}`}>
-            <div className="bg-white h-full flex flex-col p-2">
-              <AddCurrentLocation />
-              <PoiList />
-            </div>
-          </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6} style={{ height: "50%" }}>
+          <Paper elevation={3} style={{ height: "100%", overflow: "auto" }}>
+            <ROSDiagnosticViewer />
+          </Paper>
+        </Grid>
 
-          <div className={`w-full md:w-1/2 h-1/2 ${BORDER_STYLE}`}>
-            <div className="bg-black h-full p-4 flex justify-left items-left overflow-auto">
-              <ROSDiagnosticViewer />
-            </div>
-          </div>
-
-          <div className={`w-full md:w-1/2 h-1/2 ${BORDER_STYLE}`}>
-            <div className="bg-white h-full p-4 flex justify-center items-center">
-              Insert Components
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+        <Grid item xs={12} md={6} className="h-1/2 pl-2 pr-1 pt-1 pb-2">
+          <Paper elevation={3} className="h-full">
+            <Grid item xs={12} md={4} className="p-2">
+              <Speedometer />
+            </Grid>
+            <Grid item xs={12} md={4} className="p-2">
+              <HorizontalAccuracy />
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
