@@ -32,49 +32,57 @@ export default function PoiList() {
   }
 
   return (
-    <div
-      className="
-    overflow-auto
-    h-auto
-    "
-    >
-      <Grid container spacing={2}>
-        {pois.map((poi: Poi) => {
-          const coord = coords.find(
-            (coord: Coordinate) => coord.id === poi.coordinateId,
-          );
-          return (
-            <Grid item xs={12} key={poi.id}>
-              <Card>
-                <CardHeader
-                  action={
-                    <IconButton
-                      aria-label="delete entry"
-                      onClick={() => {
-                        fetch(`/api/poi/${poi.id}`, {
-                          method: "DELETE",
-                        }).then(() => mutate("/api/poi"));
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  }
-                  title={poi.name}
-                />
-                <CardContent>
-                  <Typography variant="body1">
-                    {`Latitude: ${coord.latitude}`}
-                  </Typography>
-                  <Typography variant="body1">
-                    {`Longitude: ${coord.longitude}`}
-                  </Typography>
-                  <Typography variant="body1">{`Desc: ${poi.desc}`}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+    <Grid container spacing={1}>
+      {pois.map((poi: Poi) => {
+        const coord = coords.find(
+          (coord: Coordinate) => coord.id === poi.coordinateId,
+        );
+        return (
+          <Grid item xs={6} key={poi.id}>
+            <Card>
+              <CardHeader
+                action={
+                  <IconButton
+                    aria-label="delete entry"
+                    onClick={() => {
+                      fetch(`/api/poi/${poi.id}`, {
+                        method: "DELETE",
+                      }).then(() => mutate("/api/poi"));
+                    }}
+                    style={{ padding: "4px" }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+                title={poi.name}
+                style={{
+                  paddingTop: "8px",
+                  paddingRight: "8px",
+                  paddingLeft: "8px",
+                  paddingBottom: "2px"
+                  
+                }}
+                titleTypographyProps={{ style: { fontSize: "1.2rem" } }}
+              />
+              <CardContent style={{
+                  paddingTop: "0px",
+                  paddingRight: "8px",
+                  paddingLeft: "8px",
+                  paddingBottom: "8px"
+              }}>
+                  
+                <Typography variant="body1">
+                  {`Latitude: ${coord.latitude}`}
+                </Typography>
+                <Typography variant="body1">
+                  {`Longitude: ${coord.longitude}`}
+                </Typography>
+                <Typography variant="body1">{`Desc: ${poi.desc}`}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }

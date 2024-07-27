@@ -3,7 +3,7 @@
 import Map from "react-map-gl/maplibre";
 import RoverMarker from "./RoverMarker";
 import RoverTrace from "./RoverTrace";
-import RoverLocation from "./RoverLocation";
+import RoverLocation from "./RoverPositioningSolution";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 

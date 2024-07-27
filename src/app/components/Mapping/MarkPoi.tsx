@@ -1,5 +1,5 @@
 import useLocationStore from "@/app/stores/LocationStore";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import { mutate } from "swr";
 
@@ -20,7 +20,7 @@ export default function AddCurrentLocation() {
     setDesc(target.value);
   };
 
-  const onSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     await fetch("/api/poi", {
       method: "POST",
@@ -41,28 +41,49 @@ export default function AddCurrentLocation() {
   };
 
   return (
-    <div className="w-full h-full">
-      <form onSubmit={onSubmit}>
-        <TextField
-          required
-          fullWidth
-          id="name"
-          onChange={handleNameChange}
-          value={name}
-          label="POI Name"
-        />
-        <TextField
-          required
-          fullWidth
-          id="desc"
-          onChange={handleDescChange}
-          value={desc}
-          label="Desc."
-        />
-        <Button variant="contained" type="submit" fullWidth>
-          Create POI
+   <Box
+  component="form"
+  onSubmit={handleSubmit}
+  sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    border: "1"
+  }}
+>
+  <Grid container spacing={1} justifyContent="flex-end" alignItems="center">
+    <Grid item xs={12} sm={true}>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            required
+            id="name"
+            onChange={handleNameChange}
+            value={name}
+            label="POI Name"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            required
+            id="desc"
+            onChange={handleDescChange}
+            value={desc}
+            label="Desc."
+          />
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+        <Button variant="contained" type="submit">
+          Add
         </Button>
-      </form>
-    </div>
+      </Box>
+    </Grid>
+  </Grid>
+</Box>
   );
 }
