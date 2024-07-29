@@ -54,7 +54,7 @@ export default function AddCurrentLocation() {
   <Grid container spacing={1} justifyContent="flex-end" alignItems="center">
     <Grid item xs={12} sm={true}>
       <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} >
           <TextField
             fullWidth
             required
