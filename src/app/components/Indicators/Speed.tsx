@@ -8,7 +8,7 @@ function Speedometer() {
 
   return (
     <ReactSpeedometer
-      maxValue={5.0}
+      maxValue={2.50}
       value={speed}
       needleColor="red"
       height={200}
