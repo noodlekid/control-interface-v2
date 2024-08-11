@@ -10,6 +10,7 @@ import PoiList from "../components/Mapping/PoiList";
 import ROSDiagnosticViewer from "../components/ROSDiagnosticsData";
 import Speedometer from "../components/Indicators/Speed";
 import HorizontalAccuracy from "../components/Indicators/HAccEstimate";
+import ListMark from "../components/Mapping/ListAllOnMap";
 
 function Dashboard() {
   return (
@@ -19,9 +20,10 @@ function Dashboard() {
     >
       <Grid container style={{ height: "100%" }}>
         <Grid item xs={12} md={3} className="h-1/2 pl-2 pr-1 py-2 pb-1">
-          <Paper elevation={3} style={{ height: "100%", overflow: "auto" }}>
-            <MapView />
-          </Paper>
+          <Paper
+            elevation={3}
+            style={{ height: "100%", overflow: "auto" }}
+          ></Paper>
         </Grid>
         <Grid item xs={12} md={3} className="h-1/2 pl-1 pr-1 pt-2 pb-1">
           <Paper elevation={3} className="h-full">
@@ -36,27 +38,43 @@ function Dashboard() {
           </Paper>
         </Grid>
         <Grid item xs={12} md={6} className="h-1/2 pl-1 pr-2 pt-2 pb-1">
-          <Paper elevation={3} style={{ height: "100%", overflow: "auto" }}>
+          <Paper
+            elevation={3}
+            style={{
+              height: "100%",
+              overflow: "auto",
+              backgroundColor: "black",
+            }}
+          >
             <ROSDiagnosticViewer />
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={6} className="h-1/2 pl-2 pr-1 pt-1 pb-2">
           <Paper elevation={3} className="h-full">
-            <Grid item xs={12} md={6} className="p-2 h-1/2 w-1/2 flex justify-center items-center">
-                <Speedometer />
+            <Grid
+              item
+              xs={12}
+              md={6}
+              className="p-2 h-1/2 w-1/2 flex justify-center items-center"
+            >
+              <Speedometer />
             </Grid>
-            <Grid item xs={12} md={6} className="p-2 h-1/2 w-1/2 flex justify-center items-center">
+            <Grid
+              item
+              xs={12}
+              md={6}
+              className="p-2 h-1/2 w-1/2 flex justify-center items-center"
+            >
               <HorizontalAccuracy />
             </Grid>
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={6} className="h-1/2 pl-1 pr-2 pt-1 pb-2">
-          <Paper
-            elevation={3}
-            style={{ height: "100%", overflow: "auto" }}
-          ></Paper>
+          <Paper elevation={3} style={{ height: "100%", overflow: "auto" }}>
+            <MapView />
+          </Paper>
         </Grid>
       </Grid>
     </Container>

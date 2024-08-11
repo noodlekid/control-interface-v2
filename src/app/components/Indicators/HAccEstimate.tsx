@@ -4,11 +4,10 @@ import ReactSpeedometer from "react-d3-speedometer";
 import useLocationStore from "../../stores/LocationStore";
 
 function HorizontalAccuracy() {
-  const { horizontalAccEst} = useLocationStore();
+  const { horizontalAccEst } = useLocationStore();
 
   return (
     <ReactSpeedometer
-
       maxValue={1000}
       value={horizontalAccEst}
       needleColor="red"

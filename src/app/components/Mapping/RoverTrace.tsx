@@ -28,17 +28,22 @@ export default function Trace() {
   };
 
   useEffect(() => {
-    setTrace((currentTrace) => ({
-      ...currentTrace,
-      geometry: {
-        ...currentTrace.geometry,
-        coordinates: [
-          ...currentTrace.geometry.coordinates,
-          [location.longitude, location.latitude],
-        ],
-      },
-    }));
+    if (location.longitude === 0 || location.latitude === 0) {
+      console.log('Trace Bug Fix Condition')
+    } else {
+      setTrace((currentTrace) => ({
+        ...currentTrace,
+        geometry: {
+          ...currentTrace.geometry,
+          coordinates: [
+            ...currentTrace.geometry.coordinates,
+            [location.longitude, location.latitude],
+          ],
+        },
+      }));
+    }
   }, [location]);
+
 
   return (
     <>

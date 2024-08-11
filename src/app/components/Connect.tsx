@@ -15,7 +15,7 @@ function Connect() {
   const [address, setAddress] = useState<string>("");
   useEffect(() => {
     const defaultAddress =
-      "ws://" + window.location.host.split(":")[0] + ":9090";
+      "ws://" + "192.168.1.55" + ":9090";
     setAddress(defaultAddress);
     if (ros.connection.isConnected) {
       router.push("/dashboard");
